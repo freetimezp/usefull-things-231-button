@@ -186,7 +186,7 @@ body {
     transform: translate(-50%, -50%);
     width: 20px;
     height: 20px;
-    background: radial-gradient(circle, rgba(236, 186, 247, 0.2), rgba(236, 186, 247, 0.1) 80%);
+    background: radial-gradient(circle, var(--color), rgba(236, 186, 247, 0.1) 80%);
     border-radius: 50%;
     pointer-events: none;
     animation: burstAnim 1s ease-out forwards;
