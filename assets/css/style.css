@@ -1,90 +1,213 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    list-style: none;
-    list-style-type: none;
-}
-
-a {
-    text-decoration: none;
 }
 
 body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background: #141414;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0c0c0c;
 }
 
+/* Background */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, #0c0c0c, #111, #0c0c0c);
+    background-size: 200% 200%;
+    animation: bgFlow 8s ease-in-out infinite;
+    transition: filter 1s ease;
+    z-index: 0;
+}
+
+@keyframes bgFlow {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Container */
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    z-index: 2;
 }
 
+/* Button */
 .btn {
-    font-family: Arial, Helvetica, sans-serif;
-    text-transform: uppercase;
-    color: #fff;
-    background: transparent;
+    position: relative;
+    display: inline-block;
     width: 380px;
-    padding: 10px 20px;
-    text-align: center;
     height: 80px;
     line-height: 80px;
-    font-weight: bolder;
-    font-size: 28px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
     letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    border: 2px solid #2acee4;
+    border-radius: 12px;
+    background: linear-gradient(120deg, #2acee4, #d229be, #2acee4);
+    background-size: 300% 300%;
+    transition: all 0.4s ease;
+    overflow: hidden;
     z-index: 1;
-    transition: 0.3s ease-in-out;
+    animation: gradientMove 6s ease infinite, floatUp 5s ease-in-out infinite;
+    cursor: pointer;
 }
 
+/* Gradient animation */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Floating motion */
+@keyframes floatUp {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Neon glow pulse */
 .btn::before {
     content: "";
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #2acee4;
-    opacity: 0.7;
+    inset: 0;
+    border-radius: 12px;
+    box-shadow: 0 0 25px 5px #d229be80, 0 0 50px 10px #2acee480;
+    opacity: 0;
+    transition: opacity 0.5s ease;
     z-index: -1;
-    mix-blend-mode: multiply;
-    transform-origin: top;
-    transition: 0.4s ease-in-out;
-    top: -3px;
-    left: -3px;
-}
-
-.btn::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #d229be;
-    opacity: 0.7;
-    z-index: -1;
-    mix-blend-mode: multiply;
-    transform-origin: bottom;
-    transition: 0.4s ease-in-out;
-    bottom: -3px;
-    right: -3px;
-}
-
-.btn:hover {
-    background: linear-gradient(to right, #2acee4, #d229be);
 }
 
 .btn:hover::before {
-    top: -6px;
-    left: 0;
-    transform: perspective(1000px) rotateX(80deg);
-    box-shadow: 15px 25px 100px #2acee4;
+    opacity: 1;
 }
 
-.btn:hover::after {
-    bottom: -6px;
-    right: 0;
-    transform: perspective(1000px) rotateX(-80deg);
-    box-shadow: 15px -25px 100px #d229be;
+/* Hover motion */
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px #2acee460, 0 0 70px #d229be40;
+}
+
+/* Shine sweep */
+.shine {
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transform: skewX(-25deg);
+    transition: 0.75s;
+}
+
+.btn:hover .shine {
+    left: 125%;
+}
+
+/* Floating sparks */
+.spark {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff, transparent 70%);
+    box-shadow: 0 0 10px #fff, 0 0 20px #d229be;
+    pointer-events: none;
+    opacity: 0.9;
+    animation: drift 2s ease-in-out forwards;
+}
+
+@keyframes drift {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(-30px + 60px * random()), calc(-30px + 60px * random())) scale(0);
+        opacity: 0;
+    }
+}
+
+.trail {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, #fff, transparent 70%);
+    box-shadow: 0 0 10px #fff, 0 0 20px #d229be;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fadeTrail 1.5s ease-out forwards;
+    z-index: 10;
+}
+
+@keyframes fadeTrail {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.2);
+        opacity: 0;
+    }
+}
+
+/* Subtle shimmer burst on click */
+.burst {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(236, 186, 247, 0.2), rgba(236, 186, 247, 0.1) 80%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: burstAnim 1s ease-out forwards;
+    mix-blend-mode: screen;
+    z-index: 20;
+}
+
+@keyframes burstAnim {
+    0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 1;
+        box-shadow: 0 0 20px rgba(236, 186, 247, 0.9);
+    }
+    70% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(50);
+        box-shadow: 0 0 50px rgba(236, 186, 247, 0.9);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(100);
+        box-shadow: 0 0 100px rgba(236, 186, 247, 0.9);
+    }
 }
